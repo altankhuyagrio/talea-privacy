@@ -2,9 +2,13 @@
 <html lang="ja">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Taleaプライバシーポリシー</title>
 <meta name="description" content="個人向け家計管理アプリTaleaにおけるデータの取り扱い：データはお使いのデバイスにとどまります。">
+<meta name="theme-color" content="#f2f2f7" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
+<link rel="icon" type="image/png" href="../talea.png">
+<link rel="apple-touch-icon" href="../talea.png">
 <link rel="alternate" hreflang="en" href="../">
 <link rel="alternate" hreflang="mn" href="../mn/">
 <link rel="alternate" hreflang="de" href="../de/">
@@ -16,41 +20,161 @@
 <link rel="alternate" hreflang="zh-Hant" href="../zh-hant/">
 <link rel="alternate" hreflang="x-default" href="../">
 <style>
-  :root { --bg: #ffffff; --text: #1d1d1f; --muted: #6e6e73; --line: #d2d2d7; --accent: #0066cc; --soft: #f5f5f7; }
-  @media (prefers-color-scheme: dark) {
-    :root { --bg: #000000; --text: #f5f5f7; --muted: #a1a1a6; --line: #424245; --accent: #4da3ff; --soft: #1c1c1e; }
+:root {
+  color-scheme: light dark;
+  --page: #f2f2f7; --card: #ffffff; --text: #111111; --muted: #5f5f66; --line: rgba(17,17,17,.1);
+  --link: #0e7c5a; --hero: #111111; --hero-text: #ffffff; --hero-muted: rgba(255,255,255,.72); --highlight: #d8f65a;
+  --bar: rgba(242,242,247,.82); --shadow: 0 1px 2px rgba(0,0,0,.04), 0 8px 24px rgba(0,0,0,.05);
+  --lime: #d8f65a; --lime-ink: #3f4413; --lilac: #e4dcff; --lilac-ink: #3d3550; --peach: #ffd6c2; --peach-ink: #5a3422;
+  --sky: #cde7ff; --sky-ink: #1f3a55; --butter: #f6dc7a; --butter-ink: #4a3b0b; --mint: #a6e8c8; --mint-ink: #1f4535;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --page: #000000; --card: #1c1c1e; --text: #f5f5f7; --muted: #a1a1a8; --line: rgba(255,255,255,.12);
+    --link: #d8f65a; --hero: #2b2b2e; --bar: rgba(0,0,0,.78); --shadow: none;
   }
-  * { box-sizing: border-box; }
-  html { -webkit-text-size-adjust: 100%; }
-  body { margin: 0; background: var(--bg); color: var(--text); font: 17px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; }
-  main { max-width: 42rem; margin: 0 auto; padding: 24px 16px 64px; }
-  nav { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 4px 14px; font-size: 15px; }
-  nav a, nav span { color: var(--muted); text-decoration: none; white-space: nowrap; }
-  nav a:hover { color: var(--accent); }
-  nav [aria-current] { color: var(--text); font-weight: 600; }
-  h1 { font-size: 32px; line-height: 1.15; margin: 24px 0 4px; }
-  .date { color: var(--muted); margin: 0 0 24px; }
-  .summary { background: var(--soft); border-radius: 14px; padding: 16px 18px; }
-  h2 { font-size: 21px; margin: 36px 0 8px; }
-  ul { padding-left: 1.2em; }
-  li { margin: 6px 0; }
-  a { color: var(--accent); }
-  code { font: 15px ui-monospace, SFMono-Regular, Menlo, monospace; overflow-wrap: anywhere; }
-  table { width: 100%; border-collapse: collapse; font-size: 16px; }
-  th, td { text-align: left; vertical-align: top; padding: 8px 8px 8px 0; border-bottom: 1px solid var(--line); }
-  th { font-weight: 600; }
-  footer { margin-top: 48px; color: var(--muted); font-size: 15px; }
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; scroll-padding-top: 76px; }
+@media (prefers-reduced-motion: no-preference) { html { scroll-behavior: smooth; } }
+body { margin: 0; background: var(--page); color: var(--text);
+  font: 17px/1.6 -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; }
+a { color: var(--link); text-underline-offset: 2px; }
+a:focus-visible, summary:focus-visible { outline: 2px solid var(--link); outline-offset: 3px; border-radius: 8px; }
+.icon { flex: none; display: block; }
+
+/* Header */
+.bar { position: sticky; top: 0; z-index: 10; background: var(--bar);
+  -webkit-backdrop-filter: saturate(180%) blur(20px); backdrop-filter: saturate(180%) blur(20px);
+  border-bottom: 1px solid var(--line); }
+.bar-inner { max-width: 1080px; margin: 0 auto; padding: 10px 16px; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.brand { display: flex; align-items: center; gap: 10px; color: var(--text); text-decoration: none; font-weight: 700; font-size: 18px; letter-spacing: -.01em; }
+.brand img { border-radius: 9px; }
+
+/* Language menu */
+.lang { position: relative; }
+.lang summary { list-style: none; cursor: pointer; display: flex; align-items: center; gap: 6px; min-height: 40px; padding: 0 12px;
+  border-radius: 999px; background: var(--card); box-shadow: var(--shadow); border: 1px solid var(--line); font-size: 15px; font-weight: 600; }
+.lang summary::-webkit-details-marker { display: none; }
+.lang[open] summary .chevron { transform: rotate(180deg); }
+.lang ul { position: absolute; right: 0; top: calc(100% + 8px); margin: 0; padding: 6px; list-style: none; min-width: 220px;
+  background: var(--card); border: 1px solid var(--line); border-radius: 16px; box-shadow: 0 12px 40px rgba(0,0,0,.18); }
+.lang li a, .lang li span { display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 44px; padding: 0 12px;
+  border-radius: 10px; color: var(--text); text-decoration: none; font-size: 16px; }
+.lang li a:hover { background: var(--page); }
+.lang li span { font-weight: 600; }
+.lang li span .icon { color: var(--link); }
+
+/* Layout */
+.layout { max-width: 1080px; margin: 0 auto; padding: 20px 16px 48px; }
+@media (min-width: 1000px) {
+  .layout { display: grid; grid-template-columns: 250px minmax(0, 1fr); gap: 40px; align-items: start; padding-top: 32px; }
+}
+main { max-width: 720px; min-width: 0; }
+
+/* Contents */
+.toc { background: var(--card); border-radius: 20px; box-shadow: var(--shadow); margin-bottom: 16px; }
+.toc summary { list-style: none; cursor: pointer; display: flex; align-items: center; gap: 10px; min-height: 52px; padding: 0 18px;
+  font-weight: 650; font-size: 16px; }
+.toc summary::-webkit-details-marker { display: none; }
+.toc summary .chevron { margin-left: auto; color: var(--muted); }
+.toc[open] summary .chevron { transform: rotate(180deg); }
+.toc ol { margin: 0; padding: 0 8px 10px; list-style: none; }
+.toc li a { display: flex; align-items: center; gap: 12px; min-height: 44px; padding: 4px 10px; border-radius: 10px;
+  color: var(--text); text-decoration: none; font-size: 15px; line-height: 1.3; }
+.toc li a:hover { background: var(--page); }
+.toc .mini { width: 28px; height: 28px; border-radius: 8px; display: grid; place-items: center; flex: none; }
+@media (min-width: 1000px) {
+  .toc { position: sticky; top: 84px; margin: 0; max-height: calc(100vh - 110px); overflow: auto; }
+}
+
+/* Hero, styled like the app's Settings header */
+.hero { background: var(--hero); color: var(--hero-text); border-radius: 28px; padding: 28px 22px 26px; margin-bottom: 16px; }
+.hero h1 { margin: 0; font-size: clamp(30px, 6vw, 40px); line-height: 1.1; letter-spacing: -.02em; font-weight: 800; }
+.hero .date { display: inline-flex; align-items: baseline; gap: 8px; margin: 14px 0 18px; padding: 5px 12px; border-radius: 12px;
+  background: rgba(255,255,255,.12); color: var(--hero-text); font-size: 14px; font-weight: 600; }
+.hero .date::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--highlight); flex: none; transform: translateY(-1px); }
+.hero .summary { margin: 0; color: var(--hero-muted); font-size: 18px; line-height: 1.55; }
+.hero .summary strong { color: var(--highlight); font-weight: 700; }
+@media (min-width: 640px) { .hero { padding: 36px 36px 34px; } }
+
+/* Sections */
+.card { background: var(--card); border-radius: 22px; box-shadow: var(--shadow); padding: 22px 20px 6px; margin-bottom: 14px; }
+@media (min-width: 640px) { .card { padding: 28px 30px 12px; } }
+.card h2 { display: flex; align-items: center; gap: 14px; margin: 0 0 12px; font-size: 21px; line-height: 1.25; letter-spacing: -.01em; }
+.tile { width: 40px; height: 40px; border-radius: 12px; display: grid; place-items: center; flex: none; }
+.card p, .card li { color: var(--text); }
+.card ul { margin: 0 0 16px; padding: 0; list-style: none; }
+.card li { position: relative; padding-left: 20px; margin: 0 0 12px; }
+.card li::before { content: ""; position: absolute; left: 3px; top: .62em; width: 7px; height: 7px; border-radius: 50%; background: var(--link); }
+.card p { margin: 0 0 16px; }
+code { font: 15px ui-monospace, "SF Mono", Menlo, monospace; background: var(--page); padding: 1px 6px; border-radius: 6px; overflow-wrap: anywhere; }
+table { width: 100%; border-collapse: collapse; margin: 0 0 16px; font-size: 16px; }
+th { text-align: left; font-size: 13px; text-transform: uppercase; letter-spacing: .04em; color: var(--muted); font-weight: 600; padding: 0 12px 8px 0; }
+td { padding: 12px 12px 12px 0; border-top: 1px solid var(--line); vertical-align: top; }
+td:first-child { font-weight: 600; white-space: nowrap; }
+td:last-child { color: var(--muted); }
+@media (max-width: 480px) {
+  table, tbody, tr, td { display: block; } thead { display: none; }
+  td { border: 0; padding: 0; } td:first-child { padding-top: 12px; border-top: 1px solid var(--line); }
+  td:last-child { padding: 2px 0 12px; }
+}
+#contact a[href^="mailto:"] { display: inline-flex; align-items: center; gap: 8px; margin-top: 10px; padding: 10px 16px; border-radius: 999px;
+  background: var(--text); color: var(--card); text-decoration: none; font-weight: 600; font-size: 16px; }
+.foot { display: flex; align-items: center; gap: 10px; margin: 28px 4px 0; color: var(--muted); font-size: 14px; }
+.foot img { border-radius: 6px; }
+@media print {
+  .bar, .toc { display: none; } body { background: #fff; color: #000; }
+  .hero { background: none; color: #000; padding: 0; } .hero .summary, .hero .summary strong { color: #000; }
+  .card { box-shadow: none; border: 1px solid #ddd; break-inside: avoid; }
+}
 </style>
 </head>
 <body>
-<main>
-<nav aria-label="言語"><a href="../" hreflang="en" lang="en">English</a><a href="../mn/" hreflang="mn" lang="mn">Монгол</a><a href="../de/" hreflang="de" lang="de">Deutsch</a><a href="../fr/" hreflang="fr" lang="fr">Français</a><span aria-current="page">日本語</span><a href="../ko/" hreflang="ko" lang="ko">한국어</a><a href="../pt-br/" hreflang="pt-BR" lang="pt-BR">Português (Brasil)</a><a href="../zh-hans/" hreflang="zh-Hans" lang="zh-Hans">简体中文</a><a href="../zh-hant/" hreflang="zh-Hant" lang="zh-Hant">繁體中文</a></nav>
+<header class="bar">
+<div class="bar-inner">
+<a class="brand" href="../"><img src="../talea.png" width="32" height="32" alt="">Talea</a>
+<details class="lang">
+<summary aria-label="言語: 日本語"><svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.4 2.6 3.6 5.6 3.6 9s-1.2 6.4-3.6 9c-2.4-2.6-3.6-5.6-3.6-9S9.6 5.6 12 3z"/></svg><span>日本語</span><span class="chevron"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></span></summary>
+<ul aria-label="言語">
+<li><a href="../" hreflang="en" lang="en">English</a></li>
+<li><a href="../mn/" hreflang="mn" lang="mn">Монгол</a></li>
+<li><a href="../de/" hreflang="de" lang="de">Deutsch</a></li>
+<li><a href="../fr/" hreflang="fr" lang="fr">Français</a></li>
+<li><span aria-current="page">日本語<svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg></span></li>
+<li><a href="../ko/" hreflang="ko" lang="ko">한국어</a></li>
+<li><a href="../pt-br/" hreflang="pt-BR" lang="pt-BR">Português (Brasil)</a></li>
+<li><a href="../zh-hans/" hreflang="zh-Hans" lang="zh-Hans">简体中文</a></li>
+<li><a href="../zh-hant/" hreflang="zh-Hant" lang="zh-Hant">繁體中文</a></li>
+</ul>
+</details>
+</div>
+</header>
+<div class="layout">
+<details class="toc">
+<summary><svg class="icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6h11M9 12h11M9 18h11"/><circle cx="4.5" cy="6" r="1"/><circle cx="4.5" cy="12" r="1"/><circle cx="4.5" cy="18" r="1"/></svg>このページの内容<span class="chevron"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></span></summary>
+<ol>
+<li><a href="#storage"><span class="mini" style="background:var(--lime);color:var(--lime-ink)"><svg class="icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="7" y="2.5" width="10" height="19" rx="2.5"/><path d="M11 18.5h2"/></svg></span>Taleaが保存するデータとその場所</a></li>
+<li><a href="#icloud"><span class="mini" style="background:var(--sky);color:var(--sky-ink)"><svg class="icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7.2 18.5h9.9a4.1 4.1 0 0 0 .5-8.2 6 6 0 0 0-11.4-.4 4.3 4.3 0 0 0 1 8.6z"/></svg></span>iCloud転送（任意）</a></li>
+<li><a href="#exchange-rates"><span class="mini" style="background:var(--butter);color:var(--butter-ink)"><svg class="icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8h14.5M15 4.5 18.5 8 15 11.5M20 16H5.5M9 12.5 5.5 16 9 19.5"/></svg></span>為替レート</a></li>
+<li><a href="#on-device"><span class="mini" style="background:var(--lilac);color:var(--lilac-ink)"><svg class="icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="6" y="6" width="12" height="12" rx="2.5"/><rect x="9.5" y="9.5" width="5" height="5" rx="1"/><path d="M9.5 2.5V6M14.5 2.5V6M9.5 18v3.5M14.5 18v3.5M2.5 9.5H6M2.5 14.5H6M18 9.5h3.5M18 14.5h3.5"/></svg></span>デバイス上での処理</a></li>
+<li><a href="#permissions"><span class="mini" style="background:var(--mint);color:var(--mint-ink)"><svg class="icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2.8 19.2 5.6v5.6c0 4.4-3 8.2-7.2 9.8-4.2-1.6-7.2-5.4-7.2-9.8V5.6z"/><path d="m8.8 12 2.2 2.2 4.2-4.4"/></svg></span>アクセス許可</a></li>
+<li><a href="#no-tracking"><span class="mini" style="background:var(--peach);color:var(--peach-ink)"><svg class="icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3l18 18"/><path d="M10.6 5.1A10 10 0 0 1 12 5c5 0 8.5 4.3 9.5 7a12 12 0 0 1-2.2 3.4M6.6 6.6A12 12 0 0 0 2.5 12c1 2.7 4.5 7 9.5 7a9.6 9.6 0 0 0 5.1-1.5"/><path d="M9.9 9.9a3 3 0 0 0 4.2 4.2"/></svg></span>トラッキング、アナリティクス、広告なし</a></li>
+<li><a href="#exports"><span class="mini" style="background:var(--sky);color:var(--sky-ink)"><svg class="icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3.5v11M7.5 10l4.5 4.5 4.5-4.5"/><path d="M4 15.5v3a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-3"/></svg></span>書き出しとバックアップ</a></li>
+<li><a href="#deleting"><span class="mini" style="background:var(--peach);color:var(--peach-ink)"><svg class="icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6.5h16M9.5 6.5v-2h5v2M6.5 6.5l1 13.1A1.5 1.5 0 0 0 9 21h6a1.5 1.5 0 0 0 1.5-1.4l1-13.1"/><path d="M10 10.5v6M14 10.5v6"/></svg></span>データの削除</a></li>
+<li><a href="#children"><span class="mini" style="background:var(--lilac);color:var(--lilac-ink)"><svg class="icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="7.5" r="3"/><path d="M3.5 20a5.5 5.5 0 0 1 11 0"/><circle cx="17" cy="9.5" r="2.3"/><path d="M15.6 20a4.2 4.2 0 0 1 6-3.8"/></svg></span>子ども</a></li>
+<li><a href="#changes"><span class="mini" style="background:var(--butter);color:var(--butter-ink)"><svg class="icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3.5 12A8.5 8.5 0 1 0 6 6"/><path d="M3.5 3.5V8H8"/><path d="M12 7.5V12l3 2"/></svg></span>本ポリシーの変更</a></li>
+<li><a href="#contact"><span class="mini" style="background:var(--lime);color:var(--lime-ink)"><svg class="icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="m3.5 6.5 8.5 6.5 8.5-6.5"/></svg></span>お問い合わせ</a></li>
+</ol>
+</details>
+<main id="content">
+<section class="hero">
 <h1>Taleaプライバシーポリシー</h1>
 <p class="date">施行日：2026年11月13日</p>
-
 <p class="summary">Taleaは、[DEVELOPER NAME]（「私たち」）が開発した、iPhoneとiPad用の個人向け家計管理アプリです。簡単に言うと、<strong>あなたの財務記録はお使いのデバイスにとどまります。</strong>Taleaにはユーザアカウントも私たちのサーバもなく、アナリティクス、広告、トラッキングも含まれていません。私たちがあなたのデータを見ることはできません。</p>
-
-<h2>Taleaが保存するデータとその場所</h2>
+</section>
+<section class="card" id="storage">
+<h2><span class="tile" style="background:var(--lime);color:var(--lime-ink)"><svg class="icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="7" y="2.5" width="10" height="19" rx="2.5"/><path d="M11 18.5h2"/></svg></span><span>Taleaが保存するデータとその場所</span></h2>
 <ul>
   <li><strong>あなたの記録。</strong>口座、取引、予算、目標、相手、タグ、そして添付したレシートと下書きは、お使いのデバイス上にあるTaleaのプライベートなストレージ内の1つのファイルに保存され、その隣には前回保存時の復元用コピーが置かれます。どちらもiOSのデータ保護によって保護されています。つまり、暗号化されており、デバイスがロックされている間は開くことができません。</li>
   <li><strong>あなたの環境設定</strong>（通貨、外観、リマインダーの時刻、アプリのロックなど）と最新の為替レート表は、お使いのデバイス上のTaleaの設定に保存されます。</li>
@@ -58,16 +182,19 @@
   <li><strong>デバイスのバックアップ。</strong>ほかのアプリのデータと同様に、バックアップをオンにしている場合、TaleaのファイルはiPhoneまたはiPadのバックアップ（iCloudバックアップまたはコンピュータへのバックアップ）に含まれます。これらのバックアップを扱うのは私たちではなく、Appleまたはお使いのコンピュータです。</li>
 </ul>
 <p>これらのいずれについても、私たちがコピーを受け取ったり保管したりすることはありません。</p>
-
-<h2>iCloud転送（任意）</h2>
+</section>
+<section class="card" id="icloud">
+<h2><span class="tile" style="background:var(--sky);color:var(--sky-ink)"><svg class="icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7.2 18.5h9.9a4.1 4.1 0 0 0 .5-8.2 6 6 0 0 0-11.4-.4 4.3 4.3 0 0 0 1 8.6z"/></svg></span><span>iCloud転送（任意）</span></h2>
 <p><strong>「設定」→「iCloud転送」</strong>を使用すると、Taleaはワークスペース（記録、レシート、下書き）の完全なコピーを<strong>あなた自身のiCloudアカウント</strong>のプライベートデータベースにアップロードし、ほかのiPhoneやiPadでダウンロードできるようにします。ボタンをタップするまでは何もアップロードもダウンロードもされず、バックグラウンドで同期されるものもありません。</p>
 <p>Appleはこのデータを、あなたのApple Accountに紐づくプライベートなiCloudデータベースに保存し、このデータにはAppleのiCloud利用規約とプライバシーポリシーが適用されます。開発者である私たちは、このデータを見ることもアクセスすることもできません。</p>
-
-<h2>為替レート</h2>
+</section>
+<section class="card" id="exchange-rates">
+<h2><span class="tile" style="background:var(--butter);color:var(--butter-ink)"><svg class="icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8h14.5M15 4.5 18.5 8 15 11.5M20 16H5.5M9 12.5 5.5 16 9 19.5"/></svg></span><span>為替レート</span></h2>
 <p>Taleaが自ら接続する唯一のサーバは<code>open.er-api.com</code>（<a href="https://www.exchangerate-api.com">ExchangeRate-API</a>が運営）で、その日の公開為替レート表をダウンロードするために使用します。Taleaはすべての通貨を含む表全体をダウンロードするため、このリクエストからあなたがどの通貨を使っているかがわかることはありません。リクエストには、個人データや財務データ、識別子、Cookie、キャッシュされたデータは一切含まれません。</p>
 <p>ほかのインターネットリクエストと同様に、このリクエストはお使いのデバイスのIPアドレスからレート提供元のサーバに届きます。私たちがそのアドレスを受け取ることは決してありません。ExchangeRate-APIのサービスには、ExchangeRate-API独自の利用規約とプライバシーポリシーが適用されます。<strong>「設定」→「評価レート」→「レートを自動で更新」</strong>でダウンロードをオフにして、レートを自分で入力することもできます。</p>
-
-<h2>デバイス上での処理</h2>
+</section>
+<section class="card" id="on-device">
+<h2><span class="tile" style="background:var(--lilac);color:var(--lilac-ink)"><svg class="icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="6" y="6" width="12" height="12" rx="2.5"/><rect x="9.5" y="9.5" width="5" height="5" rx="1"/><path d="M9.5 2.5V6M14.5 2.5V6M9.5 18v3.5M14.5 18v3.5M2.5 9.5H6M2.5 14.5H6M18 9.5h3.5M18 14.5h3.5"/></svg></span><span>デバイス上での処理</span></h2>
 <p>以下の機能はお使いのデバイス上で動作します。これらの機能が読み取った内容が私たちに送信されることはありません。</p>
 <ul>
   <li><strong>レシートのスキャン。</strong>ドキュメントカメラとテキスト認識（AppleのVisionKitとVision）が、デバイス上でレシートを読み取ります。写真はシステムの写真ピッカーから取得され、このピッカーはあなたが選んだ写真だけをTaleaに渡します。</li>
@@ -77,8 +204,9 @@
   <li><strong>リマインダー</strong>は、お使いのデバイス上でスケジュールされるローカル通知です。Taleaはプッシュ通知を使用しません。</li>
   <li><strong>読み込み。</strong>あなたが選んだCSVファイルや銀行明細は、デバイス上で読み込まれます。</li>
 </ul>
-
-<h2>アクセス許可</h2>
+</section>
+<section class="card" id="permissions">
+<h2><span class="tile" style="background:var(--mint);color:var(--mint-ink)"><svg class="icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2.8 19.2 5.6v5.6c0 4.4-3 8.2-7.2 9.8-4.2-1.6-7.2-5.4-7.2-9.8V5.6z"/><path d="m8.8 12 2.2 2.2 4.2-4.4"/></svg></span><span>アクセス許可</span></h2>
 <p>Taleaは、アクセス許可が必要な機能を初めて使うときにだけ、その許可を求めます。どの許可も任意で、iOSの「設定」→「Talea」でいつでも変更できます。</p>
 <table>
   <thead><tr><th scope="col">アクセス許可</th><th scope="col">許可を求めるときにTaleaが伝える内容</th></tr></thead>
@@ -90,32 +218,55 @@
     <tr><td>通知</td><td>オンにしたリマインダーを表示するためだけに使用します。</td></tr>
   </tbody>
 </table>
-
-<h2>トラッキング、アナリティクス、広告なし</h2>
+</section>
+<section class="card" id="no-tracking">
+<h2><span class="tile" style="background:var(--peach);color:var(--peach-ink)"><svg class="icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3l18 18"/><path d="M10.6 5.1A10 10 0 0 1 12 5c5 0 8.5 4.3 9.5 7a12 12 0 0 1-2.2 3.4M6.6 6.6A12 12 0 0 0 2.5 12c1 2.7 4.5 7 9.5 7a9.6 9.6 0 0 0 5.1-1.5"/><path d="M9.9 9.9a3 3 0 0 0 4.2 4.2"/></svg></span><span>トラッキング、アナリティクス、広告なし</span></h2>
 <p>Taleaには、ユーザアカウント、アナリティクス、広告、トラッキング、サードパーティ製SDKのいずれもありません。私たちはデータを保有していないため、データを販売、貸与、共有することはありません。Taleaのプライバシーマニフェストは、Taleaがデータを一切収集せず、トラッキングも行わないことを宣言しています。</p>
 <p>デバイスの設定で解析データをAppデベロッパと共有することを選択している場合、Appleから私たちに、あなたを特定しないクラッシュレポートと、集計されたApp Storeの統計情報が提供されることがあります。これについてはAppleのプライバシーポリシーが適用されます。</p>
-
-<h2>書き出しとバックアップ</h2>
+</section>
+<section class="card" id="exports">
+<h2><span class="tile" style="background:var(--sky);color:var(--sky-ink)"><svg class="icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3.5v11M7.5 10l4.5 4.5 4.5-4.5"/><path d="M4 15.5v3a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-3"/></svg></span><span>書き出しとバックアップ</span></h2>
 <p><strong>「JSONバックアップを書き出す」</strong>と<strong>「CSVを書き出す」</strong>は、「ファイル」やiCloud Driveなど、あなたが選んだ場所にのみファイルを保存します。Taleaは書き出したファイルを暗号化しません。また、保存したファイルはTaleaの外に置かれるため、安全な場所に保管してください。</p>
-
-<h2>データの削除</h2>
+</section>
+<section class="card" id="deleting">
+<h2><span class="tile" style="background:var(--peach);color:var(--peach-ink)"><svg class="icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6.5h16M9.5 6.5v-2h5v2M6.5 6.5l1 13.1A1.5 1.5 0 0 0 9 21h6a1.5 1.5 0 0 0 1.5-1.4l1-13.1"/><path d="M10 10.5v6M14 10.5v6"/></svg></span><span>データの削除</span></h2>
 <ul>
   <li><strong>「設定」→「ローカルデータを消去」</strong>を実行すると、このデバイス上の記録、レシート、下書き、復元用コピー、および取り込み待ちの項目がすべて削除されます。外観や通貨などの環境設定は保持されます。</li>
   <li><strong>アプリを削除する</strong>と、Taleaのすべてのデータがデバイスから削除されます。</li>
   <li><strong>ほかの場所に作成したコピー</strong>は、それぞれの場所で削除します。書き出したファイルは「ファイル」で、iCloudのコピーはiOSの「設定」→「ユーザ名」→「iCloud」→「ストレージ」→「Talea」で、以前のデバイスのバックアップはバックアップの設定で削除します。</li>
 </ul>
 <p>私たちはあなたのデータを一切保有していないため、私たちの側でアクセス、訂正、削除できるものはありません。データ保護に関する法律に基づくあなたの権利についてご質問がある場合は、私たちにお問い合わせください。</p>
-
-<h2>子ども</h2>
+</section>
+<section class="card" id="children">
+<h2><span class="tile" style="background:var(--lilac);color:var(--lilac-ink)"><svg class="icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="7.5" r="3"/><path d="M3.5 20a5.5 5.5 0 0 1 11 0"/><circle cx="17" cy="9.5" r="2.3"/><path d="M15.6 20a4.2 4.2 0 0 1 6-3.8"/></svg></span><span>子ども</span></h2>
 <p>Taleaは一般向けの家計管理アプリであり、子どもを対象としたものではありません。Taleaは、子どもを含め、誰からも個人情報を収集しません。</p>
-
-<h2>本ポリシーの変更</h2>
+</section>
+<section class="card" id="changes">
+<h2><span class="tile" style="background:var(--butter);color:var(--butter-ink)"><svg class="icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3.5 12A8.5 8.5 0 1 0 6 6"/><path d="M3.5 3.5V8H8"/><path d="M12 7.5V12l3 2"/></svg></span><span>本ポリシーの変更</span></h2>
 <p>本ポリシーを変更する場合は、新しいバージョンをこのURLで公開し、冒頭の日付を更新します。将来のバージョンのTaleaがデータの収集を始める場合は、そのバージョンをリリースする前に、本ポリシーとApp Storeのプライバシー情報を更新します。</p>
-
-<h2>お問い合わせ</h2>
+</section>
+<section class="card" id="contact">
+<h2><span class="tile" style="background:var(--lime);color:var(--lime-ink)"><svg class="icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="m3.5 6.5 8.5 6.5 8.5-6.5"/></svg></span><span>お問い合わせ</span></h2>
 <p>[DEVELOPER NAME]<br><a href="mailto:[CONTACT EMAIL]">[CONTACT EMAIL]</a></p>
-
-<footer>Talea · プライバシーポリシー</footer>
+</section>
+<footer class="foot"><img src="../talea.png" width="20" height="20" alt="">Talea · プライバシーポリシー</footer>
 </main>
+</div>
+<script>
+(function () {
+  var wide = matchMedia('(min-width: 1000px)');
+  var toc = document.querySelector('.toc');
+  if (toc) {
+    toc.open = wide.matches;
+    wide.addEventListener('change', function () { toc.open = wide.matches; });
+    toc.addEventListener('click', function (e) { if (e.target.closest('a') && !wide.matches) toc.open = false; });
+  }
+  var lang = document.querySelector('.lang');
+  document.addEventListener('click', function (e) { if (lang.open && !lang.contains(e.target)) lang.open = false; });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && lang.open) { lang.open = false; lang.querySelector('summary').focus(); }
+  });
+})();
+</script>
 </body>
 </html>
